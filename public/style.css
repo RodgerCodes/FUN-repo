@@ -1,0 +1,244 @@
+:root {
+  --bg-color: #2f303a;
+  --bg-color-secondary: #202027;
+  --btn-color: #2debdf;
+  --text-color: #fff;
+  --text-color-secondary: #e82193;
+  --error-color: rgb(255, 0, 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: var(--bg-color);
+}
+
+nav {
+  margin: 5px 10px;
+}
+
+nav .line {
+  width: 25px;
+  height: 3px;
+  margin: 5px 10px;
+  background: var(--text-color);
+  cursor: pointer;
+  pointer-events: all;
+  z-index: 20;
+}
+
+nav .link {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--bg-color-secondary);
+  height: 100%;
+  width: 100%;
+  clip-path: circle(100px at 100% -30%);
+  -webkit-clip-path: (100px at 100% -30%);
+  transition: all 1s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+nav .link a {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+nav .dropdown {
+  position: absolute;
+  cursor: pointer;
+  right: 5%;
+  top: 1.5%;
+  z-index: 11;
+}
+
+nav .link.open {
+  clip-path: circle(1700px at 90% -20%);
+  -webkit-clip-path: (1700px at 90% -20%);
+  pointer-events: all;
+}
+
+.signup {
+  position: absolute;
+  width: 18.7rem;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.signup h1 {
+  color: var(--text-color);
+  text-align: center;
+}
+
+.signup h1 a {
+  color: var(--text-color-secondary);
+  font-size: 2.7rem;
+}
+
+.signup form {
+  background-color: var(--bg-color-secondary);
+  margin-top: 0.2rem;
+  border-radius: 2rem;
+  height: 28rem;
+  padding: 15px 0;
+}
+
+.signup form .error p {
+  margin: 0;
+  text-align: center;
+  color: var(--error-color);
+}
+
+.signup form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 7px 15px;
+}
+
+.signup form > div label {
+  color: var(--text-color);
+}
+
+.signup form > div input[type="text"],
+.signup form > div input[type="email"],
+.signup form > div input[type="password"] {
+  background: var(--bg-color-secondary);
+  border: 2px solid var(--btn-color);
+  border-radius: 10px;
+  color: var(--text-color);
+  margin-top: 2px;
+  height: 36px;
+  padding: 5px 5px;
+}
+
+.signup form p {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.signup form p a {
+  color: var(--text-color-secondary);
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.signup form input[type="submit"] {
+  background: var(--btn-color);
+  color: var(--bg-color-secondary);
+  border-radius: 2rem;
+  padding: 8px 10px;
+  font-weight: bold;
+  font-size: 16.5px;
+  transition: all 0.5s ease;
+}
+
+.signup form input[type="submit"]:hover {
+  transform: scale(1.08);
+}
+
+/* .signup form input[type="submit"]:focus{
+  
+} */
+
+.signup form .extra {
+  padding: 5px 25px;
+}
+
+.success {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-color-secondary);
+  border-radius: 2rem;
+  padding: 10px 20px;
+  height: 20rem;
+  margin: 2px 20px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.432), -1px -1px rgba(0, 0, 0, 0.432);
+}
+
+.success > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.success h1 {
+  color: var(--text-color);
+  font-size: 1.6rem;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.success p {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+
+.success img {
+  width: 10rem;
+  margin-left: 2rem;
+  margin-top: 10px;
+}
+
+.success a {
+  color: var(--text-color-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.activate {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.activate p {
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  margin: 20px 0;
+}
+
+.activate a {
+  background: var(--btn-color);
+  color: var(--bg-color-secondary);
+  padding: 10px 60px;
+  font-weight: bold;
+  border-radius: 2rem;
+  margin-left: 25%;
+  transition: all 0.5s ease;
+}
+
+.activate a:hover {
+  transform: scale(1.1);
+}
+
+.activate img {
+  width: 12.8rem;
+  margin-left: 20%;
+  margin-top: 10px;
+}
