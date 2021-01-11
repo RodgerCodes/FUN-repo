@@ -162,7 +162,8 @@ nav .link.open {
   padding: 15px 0;
 }
 
-.signup form .error p {
+.signup form .error p,
+.signin form .error p {
   margin: 0;
   text-align: center;
   color: var(--error-color);
