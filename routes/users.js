@@ -2,19 +2,21 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendgrid = require("@sendgrid/mail");
+const passport = require("passport");
 const { body, validationResult } = require("express-validator");
+const { ensureGuest } = require("../config/auth");
 const db = require("../models");
 const router = express.Router();
 
 // @desc GET request to login page
 // @route /user/signin
-router.get("/", (req, res) => {
+router.get("/", ensureGuest, (req, res) => {
   res.render("user/signin");
 });
 
 // @desc GET request to sign up page
 // @route /user/signup
-router.get("/signup", (req, res) => {
+router.get("/signup", ensureGuest, (req, res) => {
   res.render("user/signup");
 });
 
@@ -22,6 +24,7 @@ router.get("/signup", (req, res) => {
 // @route /user/signup
 router.post(
   "/signup",
+  ensureGuest,
   body("email").isEmail(),
   body("password").isLength({ min: 6 }),
   async (req, res) => {
@@ -114,14 +117,14 @@ router.post(
 
 // @desc GET request to confirm
 // @route /user/success
-router.get("/success", (req, res) => {
+router.get("/success", ensureGuest, (req, res) => {
   // TODO: render a view with email and button back to login
   res.render("user/success");
 });
 
 // @desc GET request to confirmation page with backend valu change
 // @route /user/confirm/:token
-router.get("/confirm/:token", async (req, res) => {
+router.get("/confirm/:token", ensureGuest, async (req, res) => {
   const user = await db.user.findOne({
     where: {
       activation_token: req.params.token, //just in case
@@ -145,5 +148,17 @@ router.get("/confirm/:token", async (req, res) => {
     res.render("user/activate");
   }
 });
+
+// @desc POST request to login page
+// @route /user/login
+router.post(
+  "/login",
+  ensureGuest,
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/user",
+    failureFlash: true,
+  })
+);
 
 module.exports = router;

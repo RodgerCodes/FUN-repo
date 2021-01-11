@@ -92,7 +92,7 @@ nav .link.open {
 
 .signin form {
   background-color: var(--bg-color-secondary);
-  height: 17rem;
+  height: 20rem;
   border-radius: 2rem;
   padding: 10px 5px;
 }
