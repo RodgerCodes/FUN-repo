@@ -1,0 +1,35 @@
+<div class="signup">
+
+
+    <div>
+        <h1>Join the <a href="">fun.</a></h1>
+    </div>
+
+    <form action="/user/signup" method="POST">
+        <div class="error">
+            {{#each errors}}
+            <p>{{msg}}</p>
+            {{/each}}
+        </div>
+        <div>
+            <label for="Name">Name:</label>
+            <input type="text" name="name" placeholder="Enter Your name" value="{{name}}">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="Enter Your email" value="{{email}}">
+        </div>
+        <div>
+            <label for="password">Create Password:</label>
+            <input type="password" name="password" placeholder="Create Your new Password" value="{{password}}">
+        </div>
+        <div>
+            <label for="c_password">Confirm Password:</label>
+            <input type="password" name="c_password" placeholder="Confirm Your New password" value="{{c_password}}">
+        </div>
+        <div class="extra">
+            <p>Already have and account <a href="/user">Login</a></p>
+            <input type="submit" value="Join Now">
+        </div>
+    </form>
+</div>
