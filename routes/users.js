@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const sendgrid = require("@sendgrid/mail");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
-const { ensureGuest } = require("../config/auth");
+const { ensureAuth, ensureGuest } = require("../config/auth");
 const db = require("../models");
 const router = express.Router();
 
@@ -160,5 +160,64 @@ router.post(
     failureFlash: true,
   })
 );
+
+// @desc GET request to logout
+// @route /user/logout
+router.get("/logout", ensureAuth, (req, res) => {
+  req.logOut();
+  res.redirect("/user");
+});
+
+// @desc GET request to forgot password
+// @route /user/forget
+router.get("/forget", (req, res) => {
+  res.render("user/forgetpassword");
+});
+
+// @desc POST request to reset a password
+// @route /user/forget
+router.post("/forget", async (req, res) => {
+  try {
+    const user = await db.user.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    if (!user) {
+      res.render("user/forgetpassword", {
+        error: "No user with that email",
+      });
+    } else {
+      let token = crypto.randomBytes(20).toString("hex");
+
+      await db.user.update(
+        {
+          reset_pass_token: token,
+          reset_token_timer: Date.now() + 3600000,
+        },
+        {
+          where: {
+            email: user.email,
+          },
+        }
+      );
+      sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+      const message = {
+        to: user.email,
+        from: process.env.FROM_EMAIL,
+        subject: "Password Reset Request",
+        text: "Password Reset Request",
+        html: `You are receiving this because you requested a password reset for your account\n
+        Please click the link to reset your password http://${req.headers.host}/forget/${token}`,
+      };
+
+      sendgrid.send(message);
+      res.redirect("/user/success");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = router;
