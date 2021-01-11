@@ -76,6 +76,66 @@ nav .link.open {
   pointer-events: all;
 }
 
+.signin {
+  position: absolute;
+  width: 16.7rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.signin label {
+  color: var(--text-color);
+  margin: 5px 0;
+  font-size: 1.2rem;
+}
+
+.signin form {
+  background-color: var(--bg-color-secondary);
+  height: 17rem;
+  border-radius: 2rem;
+  padding: 10px 5px;
+}
+
+.signin form div {
+  padding: 6px 15px;
+}
+
+.signin form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.signin form > div input[type="email"],
+.signin form > div input[type="password"] {
+  background: var(--bg-color-secondary);
+  border: 2px solid var(--btn-color);
+  height: 36px;
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 5px 15px;
+}
+
+.signin form input[type="submit"] {
+  border: none;
+  background: var(--btn-color);
+  padding: 10px 20px;
+  color: var(--bg-color-secondary);
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.5s ease;
+  border-radius: 2rem;
+  margin: 10px 0;
+}
+
+.signin form a {
+  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+  margin-left: 6rem;
+  margin-top: 0;
+}
+
 .signup {
   position: absolute;
   width: 18.7rem;
