@@ -199,7 +199,8 @@ nav .link.open {
 .signup form p {
   color: var(--text-color);
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .signup form p a {
@@ -217,6 +218,7 @@ nav .link.open {
   font-weight: bold;
   font-size: 16.5px;
   transition: all 0.5s ease;
+  margin-top: 7px;
 }
 
 .signup form input[type="submit"]:hover {
