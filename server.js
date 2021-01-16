@@ -77,9 +77,8 @@ app.set("view engine", ".hbs");
 // static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.send("HEllO from Homepage");
-});
+// routes
+app.use("/", require("./routes/home"));
 app.use("/user", require("./routes/users"));
 app.use("/dashboard", require("./routes/dashboard"));
 

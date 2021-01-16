@@ -1,0 +1,81 @@
+:root {
+  --bg-color: #2f303a;
+  --text-color: #fff;
+  --text-color-secondary: #e82193;
+  --text-color-sec: #2debdf;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  overflow-x: hidden;
+}
+
+nav {
+  height: 80px;
+  background: var(--bg-color);
+}
+
+nav h1 {
+  color: var(--text-color-secondary);
+  padding: 25px 15px;
+  font-size: 2rem;
+}
+
+nav .card {
+  background: var(--text-color);
+  width: 7rem;
+  height: 7rem;
+  position: absolute;
+  right: 5%;
+  top: 9%;
+  z-index: 11;
+  display: none;
+  transition: all 0.5s ease;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.418),
+    -1px -1px 5px rgba(0, 0, 0, 0.418);
+}
+
+nav .card .link {
+  padding: 10px 28px;
+}
+
+nav .card .link li {
+  margin: 10px 0;
+}
+
+nav .card .link a {
+  color: var(--text-color-secondary);
+}
+
+nav .avatar {
+  position: absolute;
+  right: 5%;
+  top: 4%;
+}
+
+nav .avatar img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--text-color-secondary);
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+nav .card.show {
+  display: block;
+}

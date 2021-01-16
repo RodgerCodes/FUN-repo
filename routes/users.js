@@ -102,7 +102,7 @@ router.post(
             from: process.env.FROM_EMAIL,
             subject: "Email Validation",
             text: "Email Validation",
-            html: `You are receiving this because \n Please click the link Confirm your account http://${req.headers.host}/user/confirm/${token}`,
+            html: `Please click the link Confirm your account http://${req.headers.host}/user/confirm/${token}`,
           };
 
           sendgrid.send(msg);
