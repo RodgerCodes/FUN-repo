@@ -146,17 +146,11 @@ router.get("/confirm/:token", ensureGuest, async (req, res) => {
       }
     );
 
-    await db.profile.update(
-      {
-        name: user.name,
-        userId: user.id,
-      },
-      {
-        where: {
-          userId: user.id,
-        },
-      }
-    );
+    await db.profile.create({
+      name: user.name,
+      userId: user.id,
+    });
+
     res.render("user/activate");
   }
 });

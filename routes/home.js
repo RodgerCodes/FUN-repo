@@ -4,8 +4,10 @@ const router = express.Router();
 
 // @desc GET request to homepage
 // @route /
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // render homepage view
+  const user = await db.user.findAll();
+  res.send(user);
 });
 
 // @desc GET request to songs
