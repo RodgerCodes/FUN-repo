@@ -30,6 +30,11 @@ nav {
   margin: 5px 10px;
 }
 
+nav h1 {
+  color: var(--text-color-secondary);
+  /* padding: 6px 20px; */
+}
+
 nav .line {
   width: 25px;
   height: 3px;
@@ -213,6 +218,7 @@ nav .link.open {
 .signup form input[type="submit"] {
   background: var(--btn-color);
   color: var(--bg-color-secondary);
+  border: none;
   border-radius: 2rem;
   padding: 8px 10px;
   font-weight: bold;

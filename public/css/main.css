@@ -3,6 +3,8 @@
   --text-color: #fff;
   --text-color-secondary: #e82193;
   --text-color-sec: #2debdf;
+  --body-font: "Rubik", sans-serif;
+  --btn-color: #2debdf;
 }
 
 * {
@@ -20,7 +22,7 @@ li {
 }
 
 body {
-  font-family: "Rubik", sans-serif;
+  font-family: var(--body-font);
   overflow-x: hidden;
 }
 
@@ -78,4 +80,39 @@ nav .avatar img {
 
 nav .card.show {
   display: block;
+}
+
+/* container stuff */
+.container {
+  max-width: 980px;
+}
+
+.container .dashboard .starter {
+  display: flex;
+  justify-content: space-around;
+}
+
+.container .dashboard .starter p {
+  padding: 30px 18px;
+  font-size: 1.2rem;
+}
+
+.container .dashboard .starter .btn {
+  margin-top: 29px;
+}
+
+.container .dashboard .starter .btn a {
+  color: var(--bg-color);
+  background: var(--btn-color);
+  padding: 10px 15px;
+  border-radius: 2rem;
+  transition: all 0.5s ease;
+}
+
+.container .dashboard .starter .btn a:hover {
+  transform: scale(1.2);
+}
+
+.container .dashboard .content {
+  padding: 5px 30px;
 }
