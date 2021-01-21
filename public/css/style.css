@@ -76,8 +76,8 @@ nav .dropdown {
 }
 
 nav .link.open {
-  clip-path: circle(1700px at 90% -20%);
-  -webkit-clip-path: (1700px at 90% -20%);
+  clip-path: circle(1700px at 100% -30%);
+  -webkit-clip-path: (1700px at 100% -30%);
   pointer-events: all;
 }
 
@@ -231,10 +231,6 @@ nav .link.open {
   transform: scale(1.08);
 }
 
-/* .signup form input[type="submit"]:focus{
-  
-} */
-
 .signup form .extra {
   padding: 5px 25px;
 }
@@ -242,7 +238,9 @@ nav .link.open {
 .success {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 44%;
+  width: 19rem;
+  transform: translate(-50%, -50%);
   background: var(--bg-color-secondary);
   border-radius: 2rem;
   padding: 10px 20px;
@@ -347,7 +345,6 @@ nav .link.open {
 }
 
 .forget_pass form p {
-  /* margin-left: 12rem; */
   text-align: center;
   color: var(--text-color);
   font-size: 0.8rem;
@@ -379,4 +376,100 @@ nav .link.open {
   color: var(--error-color);
   text-align: center;
   margin: 8px 0;
+}
+
+/* errors */
+.errors img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20rem;
+  transform: translate(-50%, -50%);
+}
+
+.errors p {
+  text-align: center;
+  color: var(--text-color);
+  position: absolute;
+  top: 63%;
+  left: 14%;
+  font-size: 1.2rem;
+}
+
+.errors a {
+  color: var(--bg-color-secondary);
+  background: var(--btn-color);
+  padding: 10px 15px;
+  position: absolute;
+  top: 70%;
+  left: 33%;
+  border-radius: 2rem;
+  transition: all 0.5s ease;
+}
+
+.errors a:hover {
+  transform: scale(1.09);
+}
+
+/* media queries */
+@media screen and (min-width: 370px) {
+  .errors p {
+    left: 22%;
+  }
+
+  .errors a {
+    left: 40%;
+  }
+}
+
+@media screen and (min-width: 530px) {
+  .errors p {
+    left: 25%;
+  }
+
+  .errors a {
+    left: 42%;
+  }
+}
+
+@media screen and (min-width: 629px) {
+  .errors p {
+    left: 29%;
+  }
+}
+
+@media screen and (min-width: 745px) {
+  .errors p {
+    left: 33%;
+  }
+
+  .errors a {
+    left: 45%;
+  }
+}
+
+@media screen and (min-width: 940px) {
+  .errors p {
+    left: 37%;
+  }
+}
+
+@media screen and (min-width: 1140px) {
+  .errors p {
+    left: 39%;
+  }
+
+  .errors a {
+    left: 46%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .errors p {
+    left: 41%;
+  }
+
+  .success {
+    left: 50%;
+  }
 }

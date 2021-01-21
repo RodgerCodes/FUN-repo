@@ -17,7 +17,7 @@ router.get("/", ensureGuest, (req, res) => {
 // @desc GET request to sign up page
 // @route /user/signup
 router.get("/signup", ensureGuest, (req, res) => {
-  res.render("user/signup");
+  res.status(200).render("user/signup");
 });
 
 // @desc POST request to create acoount
@@ -106,7 +106,7 @@ router.post(
           };
 
           sendgrid.send(msg);
-          res.redirect("/user/success");
+          res.status(201).redirect("/user/success");
         }
       }
     } catch (err) {
@@ -132,7 +132,7 @@ router.get("/confirm/:token", ensureGuest, async (req, res) => {
   });
 
   if (!user) {
-    res.render("error/invalid");
+    res.status(404).render("errors/404");
   } else {
     await db.user.update(
       {
@@ -151,7 +151,7 @@ router.get("/confirm/:token", ensureGuest, async (req, res) => {
       userId: user.id,
     });
 
-    res.render("user/activate");
+    res.status(200).render("user/activate");
   }
 });
 
@@ -237,7 +237,7 @@ router.get("/reset/:token", async (req, res) => {
     });
 
     if (!user) {
-      res.render("errors/invalid");
+      res.render("errors/404");
     } else {
       console.log(user);
       res.render("user/reset_pass", {
@@ -256,7 +256,7 @@ router.put("/reset/:id", async (req, res) => {
     const user = await db.user.findByPk(req.params.id);
 
     if (!user) {
-      res.render("errors/500");
+      res.render("errors/404");
     } else {
       if (!req.body.password || !req.body.c_password) {
         res.render("user/reset_password", {
