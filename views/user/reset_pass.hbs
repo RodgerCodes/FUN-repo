@@ -1,0 +1,21 @@
+<div class="signin">
+    <form action="/user/reset/{{user.id}}" method="POST">
+        {{#if msg}}
+        <div class="error">
+            <p>{{msg}}</p>
+        </div>
+        {{/if}}
+        <input type="hidden" name="_method" value="PUT">
+        <div>
+            <label for="password">New Password</label>
+            <input type="password" name="password" placeholder="New password">
+        </div>
+        <div>
+            <label for="c_password">Confirm Password</label>
+            <input type="password" name="c_password" placeholder="Confirm password">
+        </div>
+        <div>
+            <input type="submit" value="Reset Password">
+        </div>
+    </form>
+</div>

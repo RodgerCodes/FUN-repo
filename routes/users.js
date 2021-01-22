@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const sendgrid = require("@sendgrid/mail");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
-const { ensureGuest } = require("../config/auth");
+const { ensureAuth, ensureGuest } = require("../config/auth");
 const db = require("../models");
 const router = express.Router();
 
@@ -160,5 +160,157 @@ router.post(
     failureFlash: true,
   })
 );
+
+// @desc GET request to logout
+// @route /user/logout
+router.get("/logout", ensureAuth, (req, res) => {
+  req.logOut();
+  res.redirect("/user");
+});
+
+// @desc GET request to forgot password
+// @route /user/forget
+router.get("/forget", (req, res) => {
+  res.render("user/forgetpassword");
+});
+
+// @desc POST request to reset a password
+// @route /user/forget
+router.post("/forget", async (req, res) => {
+  try {
+    const user = await db.user.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    if (!user) {
+      res.render("user/forgetpassword", {
+        error: "No user with that email",
+      });
+    } else {
+      let token = crypto.randomBytes(20).toString("hex");
+
+      await db.user.update(
+        {
+          reset_pass_token: token,
+          reset_token_timer: Date.now() + 3600000,
+        },
+        {
+          where: {
+            email: user.email,
+          },
+        }
+      );
+      sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+      const message = {
+        to: user.email,
+        from: process.env.FROM_EMAIL,
+        subject: "Password Reset Request",
+        text: "Password Reset Request",
+        html: `You are receiving this because you requested a password reset for your account\n
+        Please click the link to reset your password http://${req.headers.host}/user/reset/${token}`,
+      };
+
+      sendgrid.send(message);
+      res.redirect("/user/success");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// @desc GET request to reset password
+// @route /user/reset
+router.get("/reset/:token", async (req, res) => {
+  try {
+    let user = await db.user.findOne({
+      where: {
+        reset_pass_token: req.params.token,
+      },
+    });
+
+    if (!user) {
+      res.render("errors/invalid");
+    } else {
+      console.log(user);
+      res.render("user/reset_pass", {
+        user,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+// @desc PUT request to update user password
+// @route /user/reset/:user.id
+router.put("/reset/:id", async (req, res) => {
+  try {
+    const user = await db.user.findByPk(req.params.id);
+
+    if (!user) {
+      res.render("errors/500");
+    } else {
+      if (!req.body.password || !req.body.c_password) {
+        res.render("user/reset_password", {
+          user,
+          msg: "Make  sure all forms are filled",
+        });
+      }
+
+      if (req.body.password !== req.body.c_password) {
+        res.render("user/reset_password", {
+          user,
+          msg: "Make sure the passwords match",
+        });
+      }
+
+      if (req.body.password.length < 6) {
+        res.render("user/reset_password", {
+          user,
+          msg: "Password must have at least 6 characters",
+        });
+      }
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+
+    user = await db.user.update(
+      {
+        password: hash,
+        reset_pass_token: "",
+        reset_token_timer: null,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+    const message = {
+      to: user.email,
+      from: process.env.FROM_EMAIL,
+      subject: "Password Reset",
+      text: "hello",
+      html: "You password has been successfully changed",
+    };
+
+    sendgrid.send(message);
+
+    req.login(user, (err) => {
+      if (err) {
+        res.redirect("/user");
+      } else {
+        res.redirect("/dashboard");
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 module.exports = router;
