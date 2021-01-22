@@ -77,9 +77,8 @@ app.set("view engine", ".hbs");
 // static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.send("HEllO from Homepage");
-});
+// routes
+app.use("/", require("./routes/home"));
 app.use("/user", require("./routes/users"));
 app.use("/dashboard", require("./routes/dashboard"));
 
@@ -87,13 +86,25 @@ app.use("/dashboard", require("./routes/dashboard"));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// @desc GLOBAL error handlers
+app.use((req, res, next) => {
+  res.status(404).render("errors/404");
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).render("errors/500");
+});
+
 // load port
 const port = process.env.PORT || 8000;
 db.sequelize
   .sync()
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server started on Port  ${port}`);
+      console.log(
+        `Server started in ${process.env.NODE_ENV} mode on Port  ${port}`
+      );
     });
   })
   .catch((err) => {
