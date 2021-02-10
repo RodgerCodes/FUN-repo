@@ -1,2 +1,2 @@
 # NOTE
-Project has been abandoned
+Project to be continued...
