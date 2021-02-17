@@ -103,7 +103,7 @@ nav .card.show {
 
 .container .dashboard .starter .btn a {
   color: var(--bg-color);
-  background: var(--btn-color);
+  /* background: var(--btn-color); */
   padding: 10px 15px;
   border-radius: 2rem;
   transition: all 0.5s ease;

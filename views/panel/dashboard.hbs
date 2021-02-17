@@ -1,13 +1,41 @@
 <div class="dashboard">
+    <h5>Dashboard</h5>
     <div class="starter">
-        <p>Welcome, {{user.name}}</p>
+        <h4>Welcome, {{user.name}}</h4>
         {{> _upload_btn}}
     </div>
     <div class="content">
-        <p>Here is a list of your songs</p>
-        {{!-- implement table with materialize css --}}
+        <p>Here are Your Master Pieces</p>
+        {{#if articles}}
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{!-- {{#each articles}}
+                <tr>
+                    <td><a href="/dashboard/{{_id}}">{{title}}</a></td>
+                    <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
+                    <td>
+                        <a href="/dashboard/edit/{{_id}}" class="btn-small btn-float mb-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="/dashboard/delete/{{_id}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn-small red">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}} --}}
+            </tbody>
+        </table>
+        {{else}}
+        <p>You Do not Have Any Articles</p>
+        {{/if}}
     </div>
-    <div class="stats">
-        {{!-- implement stats --}}
-    </div>
-</div>

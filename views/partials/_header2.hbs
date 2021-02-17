@@ -1,11 +1,14 @@
-<h1>FUN</h1>
-<div class="avatar">
-    <img src="/images/cpy.png" alt="">
-</div>
-<div class="card">
-    <ul class="link">
-        <li>{{user.name}}</li>
-        <li><a href="/dashboard/profile">Profile</a></li>
-        <li><a href="/user/logout">logout</a></li>
-    </ul>
-</div>
+<nav class="dark darken-4">
+    <div class="nav-wrapper container">
+        <a href="/articles" class="brand-logo center bold">FUN</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger show-on-large"><i class="fas fa-bars"></i></a>
+        <ul class="sidenav" id="mobile-demo">
+            <div class="chip logo">
+                <p>{{user.name}}</p>
+            </div>
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/dashboard/profile/{{id}}">User Profile</a></li>
+            <li><a href="/logout">logout</a></li>
+        </ul>
+    </div>
+</nav>
