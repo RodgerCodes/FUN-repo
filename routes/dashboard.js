@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuth } = require("../config/auth");
 const db = require("../models");
-const multer = require("multer");
 const fs = require("fs");
 const upload = require("../config/multer");
 const cloudinary = require("../config/cloudinary");
@@ -16,9 +15,16 @@ router.get("/", ensureAuth, async (req, res) => {
     },
   });
 
+  const tracks = await db.track.findAll({
+    where: {
+      userId: req.user,
+    },
+  });
+
   // get content from upload model
   res.render("panel/dashboard", {
     user,
+    tracks,
     title: "Dashboard | Take control of your music",
     layout: "user",
   });
@@ -29,6 +35,7 @@ router.get("/", ensureAuth, async (req, res) => {
 router.get("/upload", ensureAuth, (req, res) => {
   res.render("panel/upload", {
     layout: "user",
+    title: "Upload a track",
   });
 });
 
@@ -48,20 +55,88 @@ router.post("/upload", upload.array("image"), async (req, res) => {
       fs.unlinkSync(path);
     }
 
+    if (!req.body.title) {
+      res.render("panel/upload", {
+        layout: "user",
+        msg: "Please make sure the title is provided",
+      });
+    }
+
+    if (!req.body.image) {
+      res.render("panel/upload", {
+        layout: "user",
+        msg: "Artwork and audio file in required",
+      });
+    }
+
     let creator = req.user;
     await db.track.create({
-      art: data[0].url,
+      art: urls[0].url,
+      art_id: urls[0].public,
       title: req.body.title,
       featured_artist: req.body.featured_artist,
-      audio: data[1].url,
+      audio: urls[1].url,
+      audio_id: urls[1].public,
       userId: creator,
+      lyrics: req.body.lyrics,
     });
 
-    console.log({ data: urls, image: urls[0].url });
+    res.redirect("/dashboard");
+
+    // console.log({ data: urls });
   } catch (err) {
     console.log(err);
   }
 });
+
+// @desc GET request to delete page
+// @route /dashboard/del/:id
+router.delete("/del/:id", async (req, res) => {
+  try {
+    const track = await db.track.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    // console.log(track);
+
+    await cloudinary.delete_resource([track.art_id, track.audio_id]);
+    await db.track.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// @desc GET request for a single track
+// @route /dashboard/:id
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const track = await db.track.findOne({
+//       where: {
+//         id: req.params.id,
+//       },
+//     });
+
+//     if(!track){
+//       res.status(404).render('errors/4040', {
+//         layout:"user",
+//         title:"Error"
+//       })
+//     } else {
+//       res.render('panel/track', {
+//         layout:"User"
+//       })
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 // @desc GET request to user profile page
 // @route /dashboard/profile
