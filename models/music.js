@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    audio: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
 
   track.associate = (models) => {

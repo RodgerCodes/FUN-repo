@@ -49,9 +49,13 @@ router.post("/upload", upload.array("image"), async (req, res) => {
     }
 
     let creator = req.user;
-    // await db.track.create({
-    //   art:data[0]
-    // })
+    await db.track.create({
+      art: data[0].url,
+      title: req.body.title,
+      featured_artist: req.body.featured_artist,
+      audio: data[1].url,
+      userId: creator,
+    });
 
     console.log({ data: urls, image: urls[0].url });
   } catch (err) {
