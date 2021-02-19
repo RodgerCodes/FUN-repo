@@ -90,6 +90,7 @@ router.delete("/dashboard/del/:id", async (req, res) => {
         layout: "user",
       });
     } else {
+      await cloudinary.delete_resource([track.art_id, track.audio_id]);
       await db.track.destroy({
         where: {
           id: req.params.id,
