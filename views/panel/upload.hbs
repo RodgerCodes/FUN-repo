@@ -1,0 +1,53 @@
+<div class="add">
+    <h3>Upload a New track</h3>
+</div>
+{{#if msg}}
+<p class="msg">{{msg}}
+    <button class="del blue float">X</button>
+</p>
+{{/if}}
+<div class="row">
+    <form action="/dashboard/upload" method="POST" class="col s12" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field">
+                <input type="text" name="title" id="title" value="{{title}}">
+                <label for="title">Title</label>
+            </div>
+        </div>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" name="image">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Audio artwork" name="image">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input type="text" name="featured_artist" id="title" value="{{featured_artist}}">
+                <label for="title">Featured Artists <span>(Optional)</span></label>
+            </div>
+        </div>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" name="image">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Your track" name="image">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <h5>Lyrics<span>(Optional)</span></h5>
+                <textarea name="lyrics" id="body"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="Save" class="btn">
+            <a href="/dashboard" class="btn pink">Cancel</a>
+        </div>
+    </form>
+</div>

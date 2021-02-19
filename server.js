@@ -93,7 +93,8 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).render("errors/500");
+  // res.status(500).render("errors/500");
+  console.log(err);
 });
 
 // load port
