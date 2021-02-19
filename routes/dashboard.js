@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuth } = require("../config/auth");
 const db = require("../models");
-const multer = require("multer");
 const fs = require("fs");
 const upload = require("../config/multer");
 const cloudinary = require("../config/cloudinary");
@@ -36,6 +35,7 @@ router.get("/", ensureAuth, async (req, res) => {
 router.get("/upload", ensureAuth, (req, res) => {
   res.render("panel/upload", {
     layout: "user",
+    title: "Upload a track",
   });
 });
 
@@ -53,6 +53,20 @@ router.post("/upload", upload.array("image"), async (req, res) => {
       urls.push(newPath);
 
       fs.unlinkSync(path);
+    }
+
+    if (!req.body.title) {
+      res.render("panel/upload", {
+        layout: "user",
+        msg: "Please make sure the title is provided",
+      });
+    }
+
+    if (!req.body.image) {
+      res.render("panel/upload", {
+        layout: "user",
+        msg: "Artwork and audio file in required",
+      });
     }
 
     let creator = req.user;
@@ -77,7 +91,7 @@ router.post("/upload", upload.array("image"), async (req, res) => {
 
 // @desc GET request to delete page
 // @route /dashboard/del/:id
-router.delete("/dashboard/del/:id", async (req, res) => {
+router.delete("/del/:id", async (req, res) => {
   try {
     const track = await db.track.findOne({
       where: {
@@ -85,23 +99,44 @@ router.delete("/dashboard/del/:id", async (req, res) => {
       },
     });
 
-    if (!track) {
-      res.render("errors/404", {
-        layout: "user",
-      });
-    } else {
-      await cloudinary.delete_resource([track.art_id, track.audio_id]);
-      await db.track.destroy({
-        where: {
-          id: req.params.id,
-        },
-      });
-      res.redirect("/dashboard");
-    }
+    // console.log(track);
+
+    await cloudinary.delete_resource([track.art_id, track.audio_id]);
+    await db.track.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
   }
 });
+
+// @desc GET request for a single track
+// @route /dashboard/:id
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const track = await db.track.findOne({
+//       where: {
+//         id: req.params.id,
+//       },
+//     });
+
+//     if(!track){
+//       res.status(404).render('errors/4040', {
+//         layout:"user",
+//         title:"Error"
+//       })
+//     } else {
+//       res.render('panel/track', {
+//         layout:"User"
+//       })
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 // @desc GET request to user profile page
 // @route /dashboard/profile

@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     lyrics: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20000),
       allowNull: true,
     },
     audio_id: {

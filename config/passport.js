@@ -18,7 +18,7 @@ module.exports = (passport) => {
         } else {
           if (user.active == false) {
             return done(null, false, {
-              message: "Please activate Your account first",
+              message: "Please activate Your account",
             });
           } else {
             bcrypt.compare(password, user.password, (err, isMatch) => {

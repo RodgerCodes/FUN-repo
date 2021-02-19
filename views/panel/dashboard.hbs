@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 {{#each tracks}}
-                <tr class="card">
+                <tr class="card mb-2">
                     <td><img src="{{art}}" class="circle responsive-img" style="width: 80px;" alt="artwork"></td>
                     <td><a href="/dashboard/{{id}}">{{title}}</a></td>
                     <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
@@ -36,6 +36,6 @@
                 {{/each}}
         </table>
         {{else}}
-        <p>You Do not Have Any Articles</p>
+        <p>You Do not Have Any Tracks</p>
         {{/if}}
     </div>
