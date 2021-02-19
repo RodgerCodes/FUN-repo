@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    art_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -17,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     lyrics: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    audio_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     audio: {
       type: DataTypes.STRING,

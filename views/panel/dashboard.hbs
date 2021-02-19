@@ -6,25 +6,26 @@
     </div>
     <div class="content">
         <p>Here are Your Master Pieces</p>
-        {{#if articles}}
+        {{#if tracks}}
         <table class="striped">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Title</th>
                     <th>Date</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {{!-- {{#each articles}}
-                <tr>
-                    <td><a href="/dashboard/{{_id}}">{{title}}</a></td>
+                {{#each tracks}}
+                <tr class="card">
+                    <td><img src="{{art}}" class="circle responsive-img" style="width: 80px;" alt="artwork"></td>
+                    <td><a href="/dashboard/{{id}}">{{title}}</a></td>
                     <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
                     <td>
                         <a href="/dashboard/edit/{{_id}}" class="btn-small btn-float mb-2">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="/dashboard/delete/{{_id}}" method="POST">
+                        <form action="/dashboard/del/{{id}}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">
                             <button class="btn-small red">
                                 <i class="fas fa-trash"></i>
@@ -32,8 +33,7 @@
                         </form>
                     </td>
                 </tr>
-                {{/each}} --}}
-            </tbody>
+                {{/each}}
         </table>
         {{else}}
         <p>You Do not Have Any Articles</p>

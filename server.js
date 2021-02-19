@@ -61,6 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // handlebars setup
+const { formatDate } = require("./helpers/hbs");
 app.engine(
   ".hbs",
   exphs({
@@ -69,6 +70,9 @@ app.engine(
     runtimeOptions: {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
+    },
+    helpers: {
+      formatDate,
     },
   })
 );
